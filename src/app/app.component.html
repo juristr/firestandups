@@ -1,19 +1,50 @@
 <h1>
-  App loaded
+  Firestandups
 </h1>
 
-<div> {{ (af.auth | async)?.uid }} </div>
+<div *ngIf="(af.auth | async)?.uid">
+  {{ auth.auth.displayName}}
+</div>
 
-<button (click)="login()" *ngIf="!(af.auth | async)?.uid">Login</button>
-<button (click)="logout()" *ngIf="(af.auth | async)?.uid">Logout</button>
+
+<button md-raised-button (click)="login()" *ngIf="!(af.auth | async)?.uid">Login</button>
+<button md-raised-button (click)="logout()" *ngIf="(af.auth | async)?.uid">Logout</button>
 
 <hr>
 
-<button (click)="fetchData()" *ngIf="(af.auth | async)?.uid">FetchData</button>
+<md-card class="app-input-section">
+  <form #formStandup="ngForm" (ngSubmit)="saveStandup(formStandup.value)">
+      <md-input ngModel name="yesterday" placeholder="What did I accomplish yesterday?" #yesterday maxLength="140">
+        <md-hint align="end">
+          {{yesterday.characterCount}} / 140
+        </md-hint>
+      </md-input><br>
+      <md-input ngModel name="today" placeholder="What will I do today?" #today maxLength="140">
+        <md-hint align="end">
+          {{today.characterCount}} / 140
+        </md-hint>
+      </md-input><br>
+      <md-input ngModel name="blocking" placeholder="What obstacles are impeding my progress?" #obstacles maxLength="140">
+        <md-hint align="end">
+          {{obstacles.characterCount}} / 140
+        </md-hint>
+      </md-input>
+      <div>
+        <button md-raised-button color="primary">Save</button>
+        <button md-raised-button md-tooltip="This is a tooltip!">Cancel</button>
+      </div>
+  </form>
+</md-card>
 
-<ul *ngIf="(af.auth | async)?.uid">
-  <li class="text" *ngFor="let item of items | async">
-    {{item.$key}}
-    {{item.doing}}
-  </li>
-</ul>
+<hr>
+
+<div *ngIf="(af.auth | async)?.uid">
+  <div *ngFor="let standups of items | async">
+    <h3>{{ standups.$key }}</h3>
+    <!--<md-card  *ngFor="let item of standups">
+      <p><md-icon>done</md-icon> {{ item.yesterday }}</p>
+      <p><md-icon>build</md-icon> {{ item.today }}</p>
+      <p><md-icon>warning</md-icon> {{ item.blocking }}</p>
+    </md-card>-->
+  </div>
+</div>

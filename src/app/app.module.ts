@@ -2,8 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { MaterialModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
+import { StandupsModule } from './standups/standups.module';
 
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
@@ -29,7 +31,9 @@ const myFirebaseAuthConfig = {
     BrowserModule,
     FormsModule,
     HttpModule,
-    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
+    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+    MaterialModule.forRoot(),
+    StandupsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
