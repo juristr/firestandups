@@ -1,3 +1,19 @@
 <h1>
-  {{title}}
+  App loaded
 </h1>
+
+<div> {{ (af.auth | async)?.uid }} </div>
+
+<button (click)="login()" *ngIf="!(af.auth | async)?.uid">Login</button>
+<button (click)="logout()" *ngIf="(af.auth | async)?.uid">Logout</button>
+
+<hr>
+
+<button (click)="fetchData()" *ngIf="(af.auth | async)?.uid">FetchData</button>
+
+<ul *ngIf="(af.auth | async)?.uid">
+  <li class="text" *ngFor="let item of items | async">
+    {{item.$key}}
+    {{item.doing}}
+  </li>
+</ul>
