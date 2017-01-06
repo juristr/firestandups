@@ -1,0 +1,23 @@
+<md-toolbar color="primary">
+  <span class="applogo"></span>
+  <span>Fire Standups</span>
+  <span class="spacer"></span>
+  <div *ngIf="user?.uid">
+    <span>{{ user.auth.displayName}}</span>
+    <button md-icon-button [mdMenuTriggerFor]="menu">
+      <md-icon>more_vert</md-icon>
+    </button>
+    <md-menu #menu="mdMenu">
+      <button md-menu-item (click)="logout.emit()">
+        <md-icon>power_settings_new</md-icon>
+        <span>Logout</span>
+      </button>
+    </md-menu>
+  </div>
+  <button md-button *ngIf="!user?.uid" (click)="login.emit()">Login</button>
+
+  <md-toolbar-row class="beta-notice">
+    <md-icon>warning</md-icon>
+    <span>Fire Standups is a beta software, for the purpose of testing things. Data might be deleted at any point!</span>
+  </md-toolbar-row>
+</md-toolbar>

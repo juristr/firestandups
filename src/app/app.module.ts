@@ -7,6 +7,8 @@ import { MaterialModule } from '@angular/material';
 import { AppComponent } from './app.component';
 
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
+import { ToolbarComponent } from './shared/toolbar/toolbar.component';
+
 
 // Must export the config
 export const firebaseConfig = {
@@ -24,7 +26,8 @@ const myFirebaseAuthConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,

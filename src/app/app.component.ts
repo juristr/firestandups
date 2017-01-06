@@ -40,8 +40,13 @@ export class AppComponent {
     });
   }
 
-  login() {
+  onLogin() {
     this.af.auth.login();
+  }
+
+  onLogout() {
+    console.log('calling logout');
+    this.af.auth.logout();
   }
 
   getProfilePicUrl(uid) {
@@ -49,10 +54,6 @@ export class AppComponent {
     return this.santizier.bypassSecurityTrustStyle(`url(${user.photoUrl}`);
   }
 
-  logout() {
-    console.log('calling logout');
-    this.af.auth.logout();
-  }
 
   fetchData() {
     this.items = this.af.database.list(`/testproject/standups/${this.today}`);

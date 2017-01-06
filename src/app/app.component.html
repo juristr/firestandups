@@ -1,26 +1,5 @@
-<md-toolbar color="primary">
-  <span class="applogo"></span>
-  <span>Fire Standups</span>
-  <span class="spacer"></span>
-  <div *ngIf="(af.auth | async)?.uid">
-    <span>{{ auth.auth.displayName}}</span>
-    <button md-icon-button [mdMenuTriggerFor]="menu">
-      <md-icon>more_vert</md-icon>
-    </button>
-    <md-menu #menu="mdMenu">
-      <button md-menu-item (click)="logout()">
-        <md-icon>power_settings_new</md-icon>
-        <span>Logout</span>
-      </button>
-    </md-menu>
-  </div>
-  <button md-button *ngIf="!(af.auth | async)?.uid" (click)="login()">Login</button>
+<app-toolbar [user]="af.auth | async" (login)="onLogin()" (logout)="onLogout()"></app-toolbar>
 
-  <md-toolbar-row class="beta-notice">
-    <md-icon>warning</md-icon>
-    <span>Fire Standups is a beta software, for the purpose of testing things. Data might be deleted at any point!</span>
-  </md-toolbar-row>
-</md-toolbar>
 <div class="app-container" *ngIf="(af.auth | async)?.uid">
   <button md-fab class="new-entry" *ngIf="!isEditMode" (click)="addStandupNotes()"><md-icon>add</md-icon></button>
 
