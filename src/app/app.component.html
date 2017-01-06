@@ -3,7 +3,7 @@
   <span>Fire Standups</span>
   <span class="spacer"></span>
   <div *ngIf="(af.auth | async)?.uid">
-    {{ auth.auth.displayName}}
+    <span>{{ auth.auth.displayName}}</span>
     <button md-icon-button [mdMenuTriggerFor]="menu">
       <md-icon>more_vert</md-icon>
     </button>
@@ -15,13 +15,18 @@
     </md-menu>
   </div>
   <button md-button *ngIf="!(af.auth | async)?.uid" (click)="login()">Login</button>
+
+  <md-toolbar-row class="beta-notice">
+    <md-icon>warning</md-icon>
+    <span>Fire Standups is a beta software, for the purpose of testing things. Data might be deleted at any point!</span>
+  </md-toolbar-row>
 </md-toolbar>
+<div class="app-container" *ngIf="(af.auth | async)?.uid">
+  <button md-fab class="new-entry" *ngIf="!isEditMode" (click)="addStandupNotes()"><md-icon>add</md-icon></button>
 
-<div *ngIf="(af.auth | async)?.uid">
-
-<md-card class="app-input-section">
-  <form #formStandup="ngForm" (ngSubmit)="saveStandup(formStandup.value)">
-      <md-input ngModel name="yesterday" placeholder="What did I accomplish yesterday?" #yesterday maxlength="140">
+  <md-card class="app-input-section" *ngIf="isEditMode">
+    <form #formStandup="ngForm" (ngSubmit)="saveStandup(formStandup.value)">
+      <md-input ngModel name="yesterday" placeholder="What did I accomplish yesterday?" #yesterday maxlength="140" autofocus>
         <md-hint align="end">
           {{yesterday.characterCount}} / 140
         </md-hint>
@@ -38,37 +43,36 @@
       </md-input>
       <div>
         <button md-raised-button color="primary">Save</button>
-        <button md-raised-button md-tooltip="This is a tooltip!">Cancel</button>
+        <button md-raised-button type="reset" (click)="cancel()">Cancel</button>
       </div>
-  </form>
-</md-card>
-
-<div *ngIf="(af.auth | async)?.uid">
-  <md-card class="example-card" *ngFor="let item of items | async">
-    <md-card-header>
-      <div md-card-avatar class="example-header-image" style="background-image: url(https://lh4.googleusercontent.com/-Q7MhUS4Qmsc/AAAAAAAAAAI/AAAAAAAAYgw/WF2ZpvLAMdw/photo.jpg)"></div>
-      <md-card-title>Juri</md-card-title>
-      <!--<md-card-subtitle>Dog Breed</md-card-subtitle>-->
-    </md-card-header>
-    <md-card-content>
-      <md-chip-list class="md-chip-list-stacked">
-        <md-chip color="primary">
-          <md-icon>done</md-icon><span>{{ item.yesterday }}</span>
-        </md-chip>
-        <md-chip color="accent">
-          <md-icon>trending_flat</md-icon>
-          <span>{{ item.today }}</span>
-        </md-chip>
-        <md-chip color="warn">
-          <md-icon>error_outline</md-icon>
-          <span>{{ item.blocking }}</span>
-        </md-chip>
-      </md-chip-list>
-    </md-card-content>
-    <md-card-actions>
-      <button md-button>LIKE</button>
-      <button md-button>SHARE</button>
-    </md-card-actions>
+    </form>
   </md-card>
+
+  <div *ngIf="(af.auth | async)?.uid">
+    <md-card class="example-card" *ngFor="let item of items | async">
+      <md-card-header>
+        <div md-card-avatar class="example-header-image" [style.background-image]="getProfilePicUrl(item.user.uid)"></div>
+        <md-card-title><strong>{{ item.user.name }}</strong></md-card-title>
+</md-card-header>
+<md-card-content>
+  <md-chip-list class="md-chip-list-stacked">
+    <md-chip color="primary">
+      <md-icon>done</md-icon><span>{{ item.yesterday }}</span>
+    </md-chip>
+    <md-chip color="accent">
+      <md-icon>trending_flat</md-icon>
+      <span>{{ item.today }}</span>
+    </md-chip>
+    <md-chip color="warn">
+      <md-icon>error_outline</md-icon>
+      <span>{{ item.blocking }}</span>
+    </md-chip>
+  </md-chip-list>
+</md-card-content>
+<md-card-actions *ngIf="auth.uid === item.user.uid">
+  <button md-button>Edit</button>
+  <button md-button (click)="deleteEntry(item)">Remove</button>
+</md-card-actions>
+</md-card>
 </div>
 </div>
