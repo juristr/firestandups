@@ -39,12 +39,30 @@
 <hr>
 
 <div *ngIf="(af.auth | async)?.uid">
-  <div *ngFor="let standups of items | async">
-    <h3>{{ standups.$key }}</h3>
-    <!--<md-card  *ngFor="let item of standups">
-      <p><md-icon>done</md-icon> {{ item.yesterday }}</p>
-      <p><md-icon>build</md-icon> {{ item.today }}</p>
-      <p><md-icon>warning</md-icon> {{ item.blocking }}</p>
-    </md-card>-->
-  </div>
+  <md-card class="example-card" *ngFor="let item of items | async">
+    <md-card-header>
+      <div md-card-avatar class="example-header-image" style="background-image: url(https://lh4.googleusercontent.com/-Q7MhUS4Qmsc/AAAAAAAAAAI/AAAAAAAAYgw/WF2ZpvLAMdw/photo.jpg)"></div>
+      <md-card-title>Juri</md-card-title>
+      <md-card-subtitle>Dog Breed</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <md-chip-list class="md-chip-list-stacked">
+        <md-chip color="primary">
+          <md-icon>done</md-icon><span>{{ item.yesterday }}</span>
+        </md-chip>
+        <md-chip color="accent">
+          <md-icon>trending_flat</md-icon>
+          <span>{{ item.today }}</span>
+        </md-chip>
+        <md-chip color="warn">
+          <md-icon>error_outline</md-icon>
+          <span>{{ item.blocking }}</span>
+        </md-chip>
+      </md-chip-list>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button>LIKE</button>
+      <button md-button>SHARE</button>
+    </md-card-actions>
+  </md-card>
 </div>

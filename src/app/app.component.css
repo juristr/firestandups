@@ -1,3 +1,25 @@
-md-input {
+md-input, md-input-container {
   width: 100%;
+  display:block;
+}
+
+md-card {
+  margin-bottom: 15px;
+}
+
+[md-card-avatar] {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-size: cover;
+}
+
+md-chip > md-icon {
+  float:left;
+}
+
+md-chip span {
+  display: inline-block;
+  margin-top: 5px;
+  padding-left: 5px;
 }

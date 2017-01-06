@@ -18,6 +18,13 @@ export class AppComponent {
       this.auth = auth;
       console.log('Auth', auth);
 
+      this.af.database.list('/users')
+        .update(this.auth.uid, {
+          name: this.auth.auth.displayName,
+          email: this.auth.auth.email,
+          photoUrl: this.auth.auth.photoURL
+        });
+
       this.fetchData();
     });
   }
@@ -27,15 +34,9 @@ export class AppComponent {
   }
 
   fetchData() {
-    this.items = this.af.database.list('/testproject/standups');
+    this.items = this.af.database.list(`/testproject/standups/${this.today}`);
 
-    this.af.database.list(`/testproject/standups/${this.today}`, {
-      query: {
-        uid: this.auth.uid
-      }
-    }).subscribe(data => {
-      this.userStandup = data[0];
-    });
+    console.debug('fetching data with for ', this.today);
 
     // logging
     this.af.database.list('/testproject/standups')
@@ -49,11 +50,10 @@ export class AppComponent {
   }
 
   saveStandup(newStandup) {
-    // this.af.database
+    const newObj = {};
+    newObj[this.auth.uid] = newStandup;
 
-    newStandup.uid = this.auth.uid;
-
-    this.items.push(newStandup);
+    this.items.update(this.today, newObj);
   }
 
   logout() {
