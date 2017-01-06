@@ -10,7 +10,7 @@ import * as moment from 'moment';
 export class AppComponent {
   items: FirebaseListObservable<any[]>;
   userStandup: FirebaseListObservable<any[]>;
-  auth:FirebaseAuthState;
+  auth: FirebaseAuthState;
   today = moment().format('YYYY-MM-DD');
 
   constructor(public af: AngularFire) {
@@ -31,6 +31,11 @@ export class AppComponent {
 
   login() {
     this.af.auth.login();
+  }
+
+  logout() {
+    console.log('calling logout');
+    this.af.auth.logout();
   }
 
   fetchData() {
@@ -54,10 +59,6 @@ export class AppComponent {
     newObj[this.auth.uid] = newStandup;
 
     this.items.update(this.today, newObj);
-  }
-
-  logout() {
-     this.af.auth.logout();
   }
 
 }

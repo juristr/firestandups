@@ -1,30 +1,37 @@
-<h1>
-  Firestandups
-</h1>
+<md-toolbar color="primary">
+  <span class="applogo"></span>
+  <span>Fire Standups</span>
+  <span class="spacer"></span>
+  <div *ngIf="(af.auth | async)?.uid">
+    {{ auth.auth.displayName}}
+    <button md-icon-button [mdMenuTriggerFor]="menu">
+      <md-icon>more_vert</md-icon>
+    </button>
+    <md-menu #menu="mdMenu">
+      <button md-menu-item (click)="logout()">
+        <md-icon>power_settings_new</md-icon>
+        <span>Logout</span>
+      </button>
+    </md-menu>
+  </div>
+  <button md-button *ngIf="!(af.auth | async)?.uid" (click)="login()">Login</button>
+</md-toolbar>
 
 <div *ngIf="(af.auth | async)?.uid">
-  {{ auth.auth.displayName}}
-</div>
-
-
-<button md-raised-button (click)="login()" *ngIf="!(af.auth | async)?.uid">Login</button>
-<button md-raised-button (click)="logout()" *ngIf="(af.auth | async)?.uid">Logout</button>
-
-<hr>
 
 <md-card class="app-input-section">
   <form #formStandup="ngForm" (ngSubmit)="saveStandup(formStandup.value)">
-      <md-input ngModel name="yesterday" placeholder="What did I accomplish yesterday?" #yesterday maxLength="140">
+      <md-input ngModel name="yesterday" placeholder="What did I accomplish yesterday?" #yesterday maxlength="140">
         <md-hint align="end">
           {{yesterday.characterCount}} / 140
         </md-hint>
       </md-input><br>
-      <md-input ngModel name="today" placeholder="What will I do today?" #today maxLength="140">
+      <md-input ngModel name="today" placeholder="What will I do today?" #today maxlength="140">
         <md-hint align="end">
           {{today.characterCount}} / 140
         </md-hint>
       </md-input><br>
-      <md-input ngModel name="blocking" placeholder="What obstacles are impeding my progress?" #obstacles maxLength="140">
+      <md-input ngModel name="blocking" placeholder="What obstacles are impeding my progress?" #obstacles maxlength="140">
         <md-hint align="end">
           {{obstacles.characterCount}} / 140
         </md-hint>
@@ -36,14 +43,12 @@
   </form>
 </md-card>
 
-<hr>
-
 <div *ngIf="(af.auth | async)?.uid">
   <md-card class="example-card" *ngFor="let item of items | async">
     <md-card-header>
       <div md-card-avatar class="example-header-image" style="background-image: url(https://lh4.googleusercontent.com/-Q7MhUS4Qmsc/AAAAAAAAAAI/AAAAAAAAYgw/WF2ZpvLAMdw/photo.jpg)"></div>
       <md-card-title>Juri</md-card-title>
-      <md-card-subtitle>Dog Breed</md-card-subtitle>
+      <!--<md-card-subtitle>Dog Breed</md-card-subtitle>-->
     </md-card-header>
     <md-card-content>
       <md-chip-list class="md-chip-list-stacked">
@@ -65,4 +70,5 @@
       <button md-button>SHARE</button>
     </md-card-actions>
   </md-card>
+</div>
 </div>

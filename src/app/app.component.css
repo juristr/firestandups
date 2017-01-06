@@ -1,3 +1,18 @@
+.applogo {
+  background-image: url(/assets/firebaselogo.png);
+  height: 40px;
+  width: 40px;
+  background-size:cover;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar-right {
+  justify-content: flex-end;
+}
+
 md-input, md-input-container {
   width: 100%;
   display:block;
