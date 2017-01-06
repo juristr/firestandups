@@ -3,7 +3,7 @@
   <span>Fire Standups</span>
   <span class="spacer"></span>
   <div *ngIf="user?.uid">
-    <span>{{ user.auth.displayName}}</span>
+    <span class="username">{{ user.auth.displayName}}</span>
     <button md-icon-button [mdMenuTriggerFor]="menu">
       <md-icon>more_vert</md-icon>
     </button>
@@ -14,7 +14,7 @@
       </button>
     </md-menu>
   </div>
-  <button md-button *ngIf="!user?.uid" (click)="login.emit()">Login</button>
+  <button class="btn-login" md-button *ngIf="!user?.uid" (click)="login.emit()">Login</button>
 
   <md-toolbar-row class="beta-notice">
     <md-icon>warning</md-icon>
