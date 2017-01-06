@@ -17,7 +17,7 @@ export class AppComponent {
   auth: FirebaseAuthState;
   today = moment().format('YYYY-MM-DD');
 
-  constructor(public af: AngularFire, public santizier: DomSanitizer) {
+  constructor(public af: AngularFire, private santizier: DomSanitizer) {
     this.af.auth.subscribe(auth => {
       this.auth = auth;
       console.log('Auth', auth);
