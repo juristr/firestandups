@@ -1,14 +1,17 @@
+import 'hammerjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule, MdInputModule, MdCardModule, MdButtonModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 
-import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
-
 
 // Must export the config
 export const firebaseConfig = {
@@ -19,24 +22,27 @@ export const firebaseConfig = {
   messagingSenderId: '433914487765'
 };
 
-const myFirebaseAuthConfig = {
-  provider: AuthProviders.Google,
-  method: AuthMethods.Redirect
-}
+// const myFirebaseAuthConfig = {
+//   provider: AuthProviders.Google,
+//   method: AuthMethods.Redirect
+// };
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ToolbarComponent
-  ],
+  declarations: [AppComponent, ToolbarComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
-    MaterialModule.forRoot(),
+    AngularFireModule.initializeApp(firebaseConfig, 'firestandups'),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    MaterialModule,
+    MdInputModule,
+    MdCardModule,
+    MdButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

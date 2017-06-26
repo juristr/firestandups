@@ -12,12 +12,12 @@ describe('ToolbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ToolbarComponent ],
+      declarations: [ToolbarComponent],
       imports: [
         MaterialModule.forRoot()
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -30,24 +30,47 @@ describe('ToolbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should visualize the user', () => {
-    component.user = { uid: '123', auth: { displayName: 'Juri' } };
-    fixture.detectChanges();
+  describe('when user is logged in', () => {
 
-    let userElement = fixture.nativeElement.querySelector('.username');
-    expect(userElement.innerHTML).toEqual('Juri');
+    beforeEach(() => {
+      component.user = { uid: '123', auth: { displayName: 'Juri' } };
+      fixture.detectChanges();
+    });
+
+    it('should visualize the user', () => {
+      let userElement = fixture.nativeElement.querySelector('.username');
+      expect(userElement.innerHTML).toEqual('Juri');
+    });
+
+    it('should emit the logout event', () => {
+      // const logoutButton = fixture.nativeElement.querySelector('.btn-logout');
+
+      // we spy on the EventEmitter
+      spyOn(component.logout, 'emit');
+
+      // provocate a click event
+      // logoutButton.click();
+      component.doLogout();
+
+      expect(component.logout.emit).toHaveBeenCalled();
+    });
+
   });
 
-  it('should emit the login event', () => {
-    const loginButton = fixture.nativeElement.querySelector('.btn-login');
+  describe('No user logged in', () => {
+    it('should emit the login event', () => {
+      const loginButton = fixture.nativeElement.querySelector('.btn-login');
 
-    // we spy on the EventEmitter
-    spyOn(component.login, 'emit');
+      // we spy on the EventEmitter
+      spyOn(component.login, 'emit');
 
-    // provocate a click event
-    loginButton.click();
+      // provocate a click event
+      loginButton.click();
 
-    expect(component.login.emit).toHaveBeenCalled();
+      expect(component.login.emit).toHaveBeenCalled();
+    });
   });
+
+
 
 });

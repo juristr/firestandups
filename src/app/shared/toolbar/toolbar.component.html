@@ -3,12 +3,12 @@
   <span>Fire Standups</span>
   <span class="spacer"></span>
   <div *ngIf="user?.uid">
-    <span class="username">{{ user.auth.displayName}}</span>
+    <span class="username">{{ user.displayName}}</span>
     <button md-icon-button [mdMenuTriggerFor]="menu">
       <md-icon>more_vert</md-icon>
     </button>
     <md-menu #menu="mdMenu">
-      <button md-menu-item (click)="logout.emit()">
+      <button md-menu-item (click)="doLogout()">
         <md-icon>power_settings_new</md-icon>
         <span>Logout</span>
       </button>
@@ -18,6 +18,6 @@
 
   <md-toolbar-row class="beta-notice">
     <md-icon>warning</md-icon>
-    <span>Fire Standups is a beta software, for the purpose of testing things. Data might be deleted at any point!</span>
+    <span>Fire Standups is a beta software! Don't use for prod purposes</span>
   </md-toolbar-row>
 </md-toolbar>

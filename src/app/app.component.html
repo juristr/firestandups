@@ -1,25 +1,30 @@
-<app-toolbar [user]="af.auth | async" (login)="onLogin()" (logout)="onLogout()"></app-toolbar>
+<app-toolbar [user]="auth" (login)="onLogin()" (logout)="onLogout()"></app-toolbar>
 
-<div class="app-container" *ngIf="(af.auth | async)?.uid">
+<div class="app-container" *ngIf="auth">
   <button md-fab class="new-entry" *ngIf="!isEditMode" (click)="addStandupNotes()"><md-icon>add</md-icon></button>
 
   <md-card class="app-input-section" *ngIf="isEditMode">
     <form #formStandup="ngForm" (ngSubmit)="saveStandup(formStandup.value)">
-      <md-input ngModel name="yesterday" placeholder="What did I accomplish yesterday?" #yesterday maxlength="140" autofocus>
+      <md-input-container>
+        <input mdInput ngModel name="yesterday" placeholder="What did I accomplish yesterday?" #yesterday maxlength="140" autofocus>
         <md-hint align="end">
           {{yesterday.characterCount}} / 140
         </md-hint>
-      </md-input><br>
-      <md-input ngModel name="today" placeholder="What will I do today?" #today maxlength="140">
+      </md-input-container>
+      <br>
+
+      <md-input-container>
+        <input mdInput ngModel name="today" placeholder="What will I do today?" #today maxlength="140">
         <md-hint align="end">
           {{today.characterCount}} / 140
         </md-hint>
-      </md-input><br>
-      <md-input ngModel name="blocking" placeholder="What obstacles are impeding my progress?" #obstacles maxlength="140">
+      </md-input-container><br>
+      <md-input-container>
+        <input mdInput ngModel name="blocking" placeholder="What obstacles are impeding my progress?" #obstacles maxlength="140">
         <md-hint align="end">
           {{obstacles.characterCount}} / 140
         </md-hint>
-      </md-input>
+      </md-input-container>
       <div>
         <button md-raised-button color="primary">Save</button>
         <button md-raised-button type="reset" (click)="cancel()">Cancel</button>
@@ -27,7 +32,7 @@
     </form>
   </md-card>
 
-  <div *ngIf="(af.auth | async)?.uid">
+  <div *ngIf="auth">
     <md-card class="example-card" *ngFor="let item of items | async">
       <md-card-header>
         <div md-card-avatar class="example-header-image" [style.background-image]="getProfilePicUrl(item.user.uid)"></div>
